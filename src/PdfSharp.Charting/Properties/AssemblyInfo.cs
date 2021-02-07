@@ -3,7 +3,7 @@
 // Authors:
 //   Niklas Schneider
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -36,14 +36,14 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 //
 [assembly: AssemblyTitle("PDFsharp Charting")]
-[assembly: AssemblyVersion(PdfSharp.ProductVersionInfo.Version)]
-[assembly: AssemblyDescription("A .NET charting library based on PDFsharp.")]
+[assembly: AssemblyVersion("1.52.0.0")]
+[assembly: AssemblyDescription("[Standard version] A .NET charting library based on PDFsharp.")]
 [assembly: AssemblyConfiguration(PdfSharp.ProductVersionInfo.Configuration)]
 [assembly: AssemblyCompany(PdfSharp.ProductVersionInfo.Company)]
 #if DEBUG
-  [assembly: AssemblyProduct(PdfSharp.ProductVersionInfo.Product + " (Debug Build)")]
+  [assembly: AssemblyProduct("PDFSharp.Charting")]
 #else
-  [assembly: AssemblyProduct(PdfSharp.ProductVersionInfo.Product)]
+  [assembly: AssemblyProduct("PDFSharp.Charting")]
 #endif
 [assembly: AssemblyCopyright(PdfSharp.ProductVersionInfo.Copyright)]
 [assembly: AssemblyTrademark(PdfSharp.ProductVersionInfo.Trademark)]

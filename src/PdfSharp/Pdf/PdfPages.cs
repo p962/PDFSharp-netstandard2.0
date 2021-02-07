@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -642,12 +642,7 @@ namespace PdfSharp.Pdf
             }
 
             foreach (PdfReference xref2 in kids)
-            {
-                if (xref2 == iref) //#10 - self-referencing array - file might be corrupt
-                    return new PdfDictionary[0];
-
                 list.AddRange(GetKids(xref2, values, kid));
-            }
             int count = list.Count;
             Debug.Assert(count == kid.Elements.GetInteger("/Count"));
             return list.ToArray();

@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -334,16 +334,6 @@ namespace PdfSharp
             //get { return "The PDF document is protected with an encryption not supported by PDFsharp."; }
         }
 
-        public static string UnsupportedCryptFilter
-        {
-            get { return GetString(PSMsgID.UnsupportedCryptFilter); }
-        }
-
-        public static string UnsupportedRevisionNumber
-        {
-            get { return GetString(PSMsgID.UnsupportedRevisionNumber); }
-        }
-
         #endregion
 
         #region Resource manager
@@ -367,7 +357,8 @@ namespace PdfSharp
                             System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InvariantCulture;
 #endif
 #if !NETFX_CORE && !UWP
-                            _resmngr = Properties.Resources.ResourceManager;
+                            _resmngr = new ResourceManager("PdfSharp.Resources.Messages",
+                                Assembly.GetExecutingAssembly());
 #else
                             _resmngr = new ResourceManager("PdfSharp.Resources.Messages",
                                 typeof(PSSR).GetTypeInfo().Assembly);

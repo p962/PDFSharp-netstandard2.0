@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -44,7 +44,7 @@ namespace PdfSharp
         /// <summary>
         /// A characteristic description of the product.
         /// </summary>
-        public const string Description = "A .NET library for processing PDF.";
+        public const string Description = "[NET Standard] A .NET library for processing PDF.";
 
         /// <summary>
         /// The PDF producer information string.
@@ -85,7 +85,7 @@ namespace PdfSharp
         /// <summary>
         /// The name the product.
         /// </summary>
-        public const string Product = "PDFsharp";
+        public const string Product = "PDFSharp.Standard";
 
         /// <summary>
         /// The copyright information.
@@ -110,12 +110,12 @@ namespace PdfSharp
         /// <summary>
         /// The minor version number of the product.
         /// </summary>
-        public const string VersionMinor = "3";
+        public const string VersionMinor = "51";
 
         /// <summary>
         /// The build number of the product.
         /// </summary>
-        public const string VersionBuild = "1";  // V16G // Build = days since 2005-01-01  -  change this values ONLY HERE
+        public const string VersionBuild = "5162";  // V16G // Build = days since 2005-01-01  -  change this values ONLY HERE
 
         /// <summary>
         /// The patch number of the product.

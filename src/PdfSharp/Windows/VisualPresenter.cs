@@ -1,7 +1,4 @@
-﻿#if !NETSTANDARD2_0
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -52,5 +49,3 @@ namespace PdfSharp.Windows
         readonly VisualCollection _children;
     }
 }
-
-#endif

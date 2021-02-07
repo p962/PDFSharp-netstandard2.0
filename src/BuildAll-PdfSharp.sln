@@ -1,0 +1,69 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PDFsharp", "PdfSharp\PDFsharp.csproj", "{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PDFSharp.Charting", "PdfSharp.Charting\PDFSharp.Charting.csproj", "{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{E497FABE-470A-42DD-8B01-2AE8514D2AAE}"
+	ProjectSection(SolutionItems) = preProject
+		.nuspec\PDFSharp.Standard.nuspec = .nuspec\PDFSharp.Standard.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|Win32.ActiveCfg = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A6055BC-BF86-4FDD-9F62-0109DB7A303B}.Release|x86.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|ARM.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|Win32.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{6F98A822-41B0-4C7A-85A6-E95C1D3E88EF}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {615BA279-87C0-42F8-9030-1CE7F35B1554}
+	EndGlobalSection
+EndGlobal

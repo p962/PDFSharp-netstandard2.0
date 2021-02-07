@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -36,16 +36,16 @@ using System.Windows.Markup;
 #endif
 
 [assembly: AssemblyTitle(PdfSharp.VersionInfo.Title)]
-[assembly: AssemblyVersion(PdfSharp.VersionInfo.Version)]
-[assembly: AssemblyDescription("PdfSharp for .NET Standard 2.0.")]
+[assembly: AssemblyVersion("1.51.5163.0")]
+[assembly: AssemblyDescription(PdfSharp.VersionInfo.Description)]
 [assembly: AssemblyConfiguration(PdfSharp.VersionInfo.Configuration)]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany(PdfSharp.VersionInfo.Company)]
 #if DEBUG
-[assembly: AssemblyProduct("")]
+[assembly: AssemblyProduct(PdfSharp.ProductVersionInfo.Product)]
 #else
-  [assembly: AssemblyProduct(PdfSharp.ProductVersionInfo.Product)]
+  [assembly: AssemblyProduct("PDFSharp")]
 #endif
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright(PdfSharp.VersionInfo.Copyright)]
 [assembly: AssemblyTrademark(PdfSharp.VersionInfo.Trademark)]
 [assembly: AssemblyCulture(PdfSharp.VersionInfo.Culture)]
 
@@ -55,18 +55,18 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemas.empira.com/pdfsharp/2010/xaml/presentation", "PdfSharp.Windows")]
 #endif
 
-[assembly: InternalsVisibleTo("PdfSharp.UnitTest, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
+[assembly: InternalsVisibleTo("PdfSharp.UnitTest")]
 #if WPF
-[assembly: InternalsVisibleTo("PdfSharp.Xps, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
-[assembly: InternalsVisibleTo("Edf.Xps, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
+[assembly: InternalsVisibleTo("PdfSharp.Xps")]
+[assembly: InternalsVisibleTo("Edf.Xps")]
 #endif
-[assembly: InternalsVisibleTo("PdfSharp.Toolkit.Silverlight, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
+[assembly: InternalsVisibleTo("PdfSharp.Toolkit.Silverlight")]
 
-[assembly: InternalsVisibleTo("ConsoleApplication-GDI, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
-[assembly: InternalsVisibleTo("ConsoleApplication-Core, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
+[assembly: InternalsVisibleTo("ConsoleApplication-GDI")]
+[assembly: InternalsVisibleTo("ConsoleApplication-Core")]
 
 
-[assembly: InternalsVisibleTo("PdfSharp.UA, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
-[assembly: InternalsVisibleTo("PdfSharp.UA-wpf, PublicKey=00240000048000009400000006020000002400005253413100040000010001008794e803e566eccc3c9181f52c4f7044e5442cc2ce3cbba9fc11bc4186ba2e446cd31deea20c1a8f499e978417fad2bc74143a4f8398f7cf5c5c0271b0f7fe907c537cff28b9d582da41289d1dae90168a3da2a5ed1115210a18fdae832479d3e639ca4003286ba8b98dc9144615c040ed838981ac816112df3b5a9e7cab4fbb")]
+[assembly: InternalsVisibleTo("PdfSharp.UA")]
+[assembly: InternalsVisibleTo("PdfSharp.UA-wpf")]
 
 [assembly: ComVisible(false)]

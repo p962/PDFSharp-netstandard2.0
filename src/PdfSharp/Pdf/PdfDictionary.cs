@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -123,7 +123,8 @@ namespace PdfSharp.Pdf
                 PdfName[] names = dict._elements.KeyNames;
                 foreach (PdfName name in names)
                 {
-                    if (dict._elements[name] is PdfObject obj)
+                    PdfObject obj = dict._elements[name] as PdfObject;
+                    if (obj != null)
                     {
                         obj = obj.Clone();
                         // Recall that obj.Document is now null.
@@ -191,17 +192,11 @@ namespace PdfSharp.Pdf
             //int count = Elements.Count;
             PdfName[] keys = Elements.KeyNames;
 
+#if DEBUG
+            // TODO: automatically set length
             if (_stream != null)
-            {
-                if (writer.SecurityHandler != null)
-                {
-                    // Encryption could change the size of the stream.
-                    // Encrypt the bytes before writing the dictionary to get the actual size.
-                    byte[] bytes = (byte[])_stream.Value.Clone();
-                    _stream.Value = writer.SecurityHandler.EncryptBytes(bytes);
-                }
-                Elements[PdfStream.Keys.Length] = new PdfInteger(_stream.Length);
-            }
+                Debug.Assert(Elements.ContainsKey(PdfStream.Keys.Length), "Dictionary has a stream but no length is set.");
+#endif
 
 #if DEBUG
             // Sort keys for debugging purposes. Comparing PDF files with for example programs like
@@ -345,7 +340,7 @@ namespace PdfSharp.Pdf
             /// If the value does not exist, the function returns false.
             /// If the value is not convertible, the function throws an InvalidCastException.
             /// </summary>
-            public bool GetBoolean(string key, bool create = false)
+            public bool GetBoolean(string key, bool create)
             {
                 object obj = this[key];
                 if (obj == null)
@@ -358,12 +353,24 @@ namespace PdfSharp.Pdf
                 if (obj is PdfReference)
                     obj = ((PdfReference)obj).Value;
 
-                if (obj is PdfBoolean boolean)
+                PdfBoolean boolean = obj as PdfBoolean;
+                if (boolean != null)
                     return boolean.Value;
 
-                if (obj is PdfBooleanObject booleanObject)
+                PdfBooleanObject booleanObject = obj as PdfBooleanObject;
+                if (booleanObject != null)
                     return booleanObject.Value;
                 throw new InvalidCastException("GetBoolean: Object is not a boolean.");
+            }
+
+            /// <summary>
+            /// Converts the specified value to boolean.
+            /// If the value does not exist, the function returns false.
+            /// If the value is not convertible, the function throws an InvalidCastException.
+            /// </summary>
+            public bool GetBoolean(string key)
+            {
+                return GetBoolean(key, false);
             }
 
             /// <summary>
@@ -379,30 +386,38 @@ namespace PdfSharp.Pdf
             /// If the value does not exist, the function returns 0.
             /// If the value is not convertible, the function throws an InvalidCastException.
             /// </summary>
-            public int GetInteger(string key, bool create = false)
+            public int GetInteger(string key, bool create)
             {
-                var obj = this[key];
+                object obj = this[key];
                 if (obj == null)
                 {
                     if (create)
                         this[key] = new PdfInteger();
                     return 0;
                 }
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                switch (obj)
-                {
-                    case PdfInteger integer:
-                        return integer.Value;
-                    case PdfIntegerObject integerObject:
-                        return integerObject.Value;
-                    case PdfUInteger uInteger when uInteger.Value < int.MaxValue:
-                        return (int)uInteger.Value;
-                    case PdfUIntegerObject uIntegerObject when uIntegerObject.Value < int.MaxValue:
-                        return (int)uIntegerObject.Value;
-                }
+                PdfInteger integer = obj as PdfInteger;
+                if (integer != null)
+                    return integer.Value;
+
+                PdfIntegerObject integerObject = obj as PdfIntegerObject;
+                if (integerObject != null)
+                    return integerObject.Value;
+
                 throw new InvalidCastException("GetInteger: Object is not an integer.");
+            }
+
+            /// <summary>
+            /// Converts the specified value to integer.
+            /// If the value does not exist, the function returns 0.
+            /// If the value is not convertible, the function throws an InvalidCastException.
+            /// </summary>
+            public int GetInteger(string key)
+            {
+                return GetInteger(key, false);
             }
 
             /// <summary>
@@ -414,50 +429,11 @@ namespace PdfSharp.Pdf
             }
 
             /// <summary>
-            /// Converts the specified value to unsigned integer.
-            /// If the value does not exist, the function returns 0.
-            /// If the value is not convertible, the function throws an InvalidCastException.
-            /// </summary>
-            public uint GetUInteger(string key, bool create = false)
-            {
-                var obj = this[key];
-                if (obj == null)
-                {
-                    if (create)
-                        this[key] = new PdfUInteger();
-                    return 0u;
-                }
-                if (obj is PdfReference reference)
-                    obj = reference.Value;
-
-                switch (obj)
-                {
-                    case PdfUInteger uInteger:
-                        return uInteger.Value;
-                    case PdfUIntegerObject uIntegerObject:
-                        return uIntegerObject.Value;
-                    case PdfInteger integer:
-                        return (uint)integer.Value;
-                    case PdfIntegerObject integerObject:
-                        return (uint)integerObject.Value;
-                }
-                throw new InvalidCastException("GetUInteger: Object is not an unsigned integer.");
-            }
-
-            /// <summary>
-            /// Sets the entry to an unsigned integer value.
-            /// </summary>
-            public void SetUInteger(string key, uint value)
-            {
-                this[key] = new PdfUInteger(value);
-            }
-
-            /// <summary>
             /// Converts the specified value to double.
             /// If the value does not exist, the function returns 0.
             /// If the value is not convertible, the function throws an InvalidCastException.
             /// </summary>
-            public double GetReal(string key, bool create = false)
+            public double GetReal(string key, bool create)
             {
                 object obj = this[key];
                 if (obj == null)
@@ -467,22 +443,37 @@ namespace PdfSharp.Pdf
                     return 0;
                 }
 
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfReal real)
+                PdfReal real = obj as PdfReal;
+                if (real != null)
                     return real.Value;
 
-                if (obj is PdfRealObject realObject)
+                PdfRealObject realObject = obj as PdfRealObject;
+                if (realObject != null)
                     return realObject.Value;
 
-                if (obj is PdfInteger integer)
+                PdfInteger integer = obj as PdfInteger;
+                if (integer != null)
                     return integer.Value;
 
-                if (obj is PdfIntegerObject integerObject)
+                PdfIntegerObject integerObject = obj as PdfIntegerObject;
+                if (integerObject != null)
                     return integerObject.Value;
 
                 throw new InvalidCastException("GetReal: Object is not a number.");
+            }
+
+            /// <summary>
+            /// Converts the specified value to double.
+            /// If the value does not exist, the function returns 0.
+            /// If the value is not convertible, the function throws an InvalidCastException.
+            /// </summary>
+            public double GetReal(string key)
+            {
+                return GetReal(key, false);
             }
 
             /// <summary>
@@ -497,7 +488,7 @@ namespace PdfSharp.Pdf
             /// Converts the specified value to String.
             /// If the value does not exist, the function returns the empty string.
             /// </summary>
-            public string GetString(string key, bool create = false)
+            public string GetString(string key, bool create)
             {
                 object obj = this[key];
                 if (obj == null)
@@ -507,22 +498,36 @@ namespace PdfSharp.Pdf
                     return "";
                 }
 
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfString str)
+                PdfString str = obj as PdfString;
+                if (str != null)
                     return str.Value;
 
-                if (obj is PdfStringObject strObject)
+                PdfStringObject strObject = obj as PdfStringObject;
+                if (strObject != null)
                     return strObject.Value;
 
-                if (obj is PdfName name)
+                PdfName name = obj as PdfName;
+                if (name != null)
                     return name.Value;
 
-                if (obj is PdfNameObject nameObject)
+                PdfNameObject nameObject = obj as PdfNameObject;
+                if (nameObject != null)
                     return nameObject.Value;
 
                 throw new InvalidCastException("GetString: Object is not a string.");
+            }
+
+            /// <summary>
+            /// Converts the specified value to String.
+            /// If the value does not exist, the function returns the empty string.
+            /// </summary>
+            public string GetString(string key)
+            {
+                return GetString(key, false);
             }
 
             /// <summary>
@@ -535,28 +540,33 @@ namespace PdfSharp.Pdf
                 if (obj == null)
                     return false;
 
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfString str)
+                PdfString str = obj as PdfString;
+                if (str != null)
                 {
                     value = str.Value;
                     return true;
                 }
 
-                if (obj is PdfStringObject strObject)
+                PdfStringObject strObject = obj as PdfStringObject;
+                if (strObject != null)
                 {
                     value = strObject.Value;
                     return true;
                 }
 
-                if (obj is PdfName name)
+                PdfName name = obj as PdfName;
+                if (name != null)
                 {
                     value = name.Value;
                     return true;
                 }
 
-                if (obj is PdfNameObject nameObject)
+                PdfNameObject nameObject = obj as PdfNameObject;
+                if (nameObject != null)
                 {
                     value = nameObject.Value;
                     return true;
@@ -587,13 +597,16 @@ namespace PdfSharp.Pdf
                     return String.Empty;
                 }
 
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfName name)
+                PdfName name = obj as PdfName;
+                if (name != null)
                     return name.Value;
 
-                if (obj is PdfNameObject nameObject)
+                PdfNameObject nameObject = obj as PdfNameObject;
+                if (nameObject != null)
                     return nameObject.Value;
 
                 throw new InvalidCastException("GetName: Object is not a name.");
@@ -619,7 +632,7 @@ namespace PdfSharp.Pdf
             /// If the value does not exist, the function returns an empty rectangle.
             /// If the value is not convertible, the function throws an InvalidCastException.
             /// </summary>
-            public PdfRectangle GetRectangle(string key, bool create = false)
+            public PdfRectangle GetRectangle(string key, bool create)
             {
                 PdfRectangle value = new PdfRectangle();
                 object obj = this[key];
@@ -632,7 +645,8 @@ namespace PdfSharp.Pdf
                 if (obj is PdfReference)
                     obj = ((PdfReference)obj).Value;
 
-                if (obj is PdfArray array && array.Elements.Count == 4)
+                PdfArray array = obj as PdfArray;
+                if (array != null && array.Elements.Count == 4)
                 {
                     value = new PdfRectangle(array.Elements.GetReal(0), array.Elements.GetReal(1),
                       array.Elements.GetReal(2), array.Elements.GetReal(3));
@@ -641,6 +655,16 @@ namespace PdfSharp.Pdf
                 else
                     value = (PdfRectangle)obj;
                 return value;
+            }
+
+            /// <summary>
+            /// Converts the specified value to PdfRectangle.
+            /// If the value does not exist, the function returns an empty rectangle.
+            /// If the value is not convertible, the function throws an InvalidCastException.
+            /// </summary>
+            public PdfRectangle GetRectangle(string key)
+            {
+                return GetRectangle(key, false);
             }
 
             /// <summary>
@@ -654,7 +678,7 @@ namespace PdfSharp.Pdf
             /// Converts the specified value to XMatrix.
             /// If the value does not exist, the function returns an identity matrix.
             /// If the value is not convertible, the function throws an InvalidCastException.
-            public XMatrix GetMatrix(string key, bool create = false)
+            public XMatrix GetMatrix(string key, bool create)
             {
                 XMatrix value = new XMatrix();
                 object obj = this[key];
@@ -664,10 +688,12 @@ namespace PdfSharp.Pdf
                         this[key] = new PdfLiteral("[1 0 0 1 0 0]");  // cannot be parsed, implement a PdfMatrix...
                     return value;
                 }
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfArray array && array.Elements.Count == 6)
+                PdfArray array = obj as PdfArray;
+                if (array != null && array.Elements.Count == 6)
                 {
                     value = new XMatrix(array.Elements.GetReal(0), array.Elements.GetReal(1), array.Elements.GetReal(2),
                       array.Elements.GetReal(3), array.Elements.GetReal(4), array.Elements.GetReal(5));
@@ -679,6 +705,14 @@ namespace PdfSharp.Pdf
                 else
                     throw new InvalidCastException("Element is not an array with 6 values.");
                 return value;
+            }
+
+            /// Converts the specified value to XMatrix.
+            /// If the value does not exist, the function returns an identity matrix.
+            /// If the value is not convertible, the function throws an InvalidCastException.
+            public XMatrix GetMatrix(string key)
+            {
+                return GetMatrix(key, false);
             }
 
             /// <summary>
@@ -702,18 +736,22 @@ namespace PdfSharp.Pdf
                     return defaultValue;
                 }
 
-                if (obj is PdfReference reference)
+                PdfReference reference = obj as PdfReference;
+                if (reference != null)
                     obj = reference.Value;
 
-                if (obj is PdfDate date)
+                PdfDate date = obj as PdfDate;
+                if (date != null)
                     return date.Value;
 
                 string strDate;
-                if (obj is PdfString pdfString)
+                PdfString pdfString = obj as PdfString;
+                if (pdfString != null)
                     strDate = pdfString.Value;
                 else
                 {
-                    if (obj is PdfStringObject stringObject)
+                    PdfStringObject stringObject = obj as PdfStringObject;
+                    if (stringObject != null)
                         strDate = stringObject.Value;
                     else
                         throw new InvalidCastException("GetName: Object is not a name.");
@@ -740,7 +778,7 @@ namespace PdfSharp.Pdf
                 _elements[key] = new PdfDate(value);
             }
 
-            internal int GetEnumFromName(string key, object defaultValue, bool create = false)
+            internal int GetEnumFromName(string key, object defaultValue, bool create)
             {
                 if (!(defaultValue is Enum))
                     throw new ArgumentException("defaultValue");
@@ -756,6 +794,11 @@ namespace PdfSharp.Pdf
                 }
                 Debug.Assert(obj is Enum);
                 return (int)Enum.Parse(defaultValue.GetType(), obj.ToString().Substring(1), false);
+            }
+
+            internal int GetEnumFromName(string key, object defaultValue)
+            {
+                return GetEnumFromName(key, defaultValue, false);
             }
 
             internal void SetEnumAsName(string key, object value)
@@ -1074,8 +1117,9 @@ namespace PdfSharp.Pdf
                 {
                     obj.Reference = oldValue.Reference;
                     obj.Reference.Value = obj;
-                    if (obj is PdfDictionary dict)
+                    if (obj is PdfDictionary)
                     {
+                        PdfDictionary dict = (PdfDictionary)obj;
                         dict._elements = oldValue._elements;
                     }
                 }
@@ -1139,7 +1183,8 @@ namespace PdfSharp.Pdf
             public PdfObject GetObject(string key)
             {
                 PdfItem item = this[key];
-                if (item is PdfReference reference)
+                PdfReference reference = item as PdfReference;
+                if (reference != null)
                     return reference.Value;
                 return item as PdfObject;
             }
@@ -1198,7 +1243,9 @@ namespace PdfSharp.Pdf
             /// </summary>
             public void SetReference(string key, PdfReference iref)
             {
-                this[key] = iref ?? throw new ArgumentNullException("iref");
+                if (iref == null)
+                    throw new ArgumentNullException("iref");
+                this[key] = iref;
             }
 
             #region IDictionary Members
@@ -1233,7 +1280,8 @@ namespace PdfSharp.Pdf
             {
                 get
                 {
-                    _elements.TryGetValue(key, out PdfItem item);
+                    PdfItem item;
+                    _elements.TryGetValue(key, out item);
                     return item;
                 }
                 set
@@ -1257,7 +1305,8 @@ namespace PdfSharp.Pdf
                             throw new ArgumentException("A dictionary with stream cannot be a direct value.");
                     }
 #endif
-                    if (value is PdfObject obj && obj.IsIndirect)
+                    PdfObject obj = value as PdfObject;
+                    if (obj != null && obj.IsIndirect)
                         value = obj.Reference;
                     _elements[key] = value;
                 }
@@ -1275,7 +1324,8 @@ namespace PdfSharp.Pdf
                         throw new ArgumentNullException("value");
 
 #if DEBUG
-                    if (value is PdfDictionary dictionary)
+                    PdfDictionary dictionary = value as PdfDictionary;
+                    if (dictionary != null)
                     {
                         PdfDictionary dict = dictionary;
                         if (dict._stream != null)
@@ -1283,7 +1333,8 @@ namespace PdfSharp.Pdf
                     }
 #endif
 
-                    if (value is PdfObject obj && obj.IsIndirect)
+                    PdfObject obj = value as PdfObject;
+                    if (obj != null && obj.IsIndirect)
                         value = obj.Reference;
                     _elements[key.Value] = value;
                 }
@@ -1350,7 +1401,8 @@ namespace PdfSharp.Pdf
                     throw new ArgumentException("The key must start with a slash '/'.");
 
                 // If object is indirect automatically convert value to reference.
-                if (value is PdfObject obj && obj.IsIndirect)
+                PdfObject obj = value as PdfObject;
+                if (obj != null && obj.IsIndirect)
                     value = obj.Reference;
 
                 _elements.Add(key, value);
@@ -1512,7 +1564,9 @@ namespace PdfSharp.Pdf
         {
             internal PdfStream(PdfDictionary ownerDictionary)
             {
-                _ownerDictionary = ownerDictionary ?? throw new ArgumentNullException("ownerDictionary");
+                if (ownerDictionary == null)
+                    throw new ArgumentNullException("ownerDictionary");
+                _ownerDictionary = ownerDictionary;
             }
 
             /// <summary>
@@ -1631,7 +1685,9 @@ namespace PdfSharp.Pdf
                 get { return _value; }
                 set
                 {
-                    _value = value ?? throw new ArgumentNullException("value");
+                    if (value == null)
+                        throw new ArgumentNullException("value");
+                    _value = value;
                     _ownerDictionary.Elements.SetInteger(Keys.Length, value.Length);
                 }
             }

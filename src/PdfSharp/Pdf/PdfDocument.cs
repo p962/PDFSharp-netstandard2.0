@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -313,13 +313,14 @@ namespace PdfSharp.Pdf
         /// <summary>
         /// Saves the document to the specified stream.
         /// </summary>
-        public void Save(Stream stream, bool closeStream = false)
+        public void Save(Stream stream, bool closeStream)
         {
             if (!CanModify)
                 throw new InvalidOperationException(PSSR.CannotModify);
 
             // TODO: more diagnostic checks
-            if (!CanSave(out string message))
+            string message = "";
+            if (!CanSave(ref message))
                 throw new PdfSharpException(message);
 
             // Get security handler if document gets encrypted.
@@ -352,6 +353,16 @@ namespace PdfSharp.Pdf
                 if (writer != null)
                     writer.Close(closeStream);
             }
+        }
+
+        /// <summary>
+        /// Saves the document to the specified stream.
+        /// The stream is not closed by this function.
+        /// (Older versions of PDFsharp closes the stream. That was not very useful.)
+        /// </summary>
+        public void Save(Stream stream)
+        {
+            Save(stream, false);
         }
 
         /// <summary>
@@ -486,9 +497,9 @@ namespace PdfSharp.Pdf
         /// <summary>
         /// Determines whether the document can be saved.
         /// </summary>
-        public bool CanSave(out string message)
+        public bool CanSave(ref string message)
         {
-            if (!SecuritySettings.CanSave(out message))
+            if (!SecuritySettings.CanSave(ref message))
                 return false;
 
             return true;

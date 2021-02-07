@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -87,7 +87,7 @@ namespace PdfSharp.Pdf.Security
         /// <summary>
         /// Determines whether the document can be saved.
         /// </summary>
-        internal bool CanSave(out string message)
+        internal bool CanSave(ref string message)
         {
             if (_documentSecurityLevel != PdfDocumentSecurityLevel.None)
             {
@@ -97,7 +97,6 @@ namespace PdfSharp.Pdf.Security
                     return false;
                 }
             }
-            message = null;
             return true;
         }
 

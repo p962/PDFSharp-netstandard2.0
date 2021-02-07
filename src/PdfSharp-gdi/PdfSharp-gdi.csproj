@@ -29,7 +29,7 @@
     <SignAssembly>true</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -48,7 +48,6 @@
         <SccLocalPath>SAK</SccLocalPath>
         <SccAuxPath>SAK</SccAuxPath>
         <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -901,9 +900,6 @@
     </Compile>
     <Compile Include="..\PdfSharp\Pdf.Printing\PdfFilePrinter.cs">
       <Link>Pdf.Printing\PdfFilePrinter.cs</Link>
-    </Compile>
-    <Compile Include="..\PdfSharp\Pdf.Security\CryptFilterDictionary.cs">
-      <Link>Pdf.Security\CryptFilterDictionary.cs</Link>
     </Compile>
     <Compile Include="..\PdfSharp\Pdf.Security\enums\PdfDocumentSecurity.cs">
       <Link>Pdf.Security\enums\PdfDocumentSecurity.cs</Link>

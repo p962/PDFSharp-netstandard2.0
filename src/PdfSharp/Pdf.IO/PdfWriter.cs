@@ -3,7 +3,7 @@
 // Authors:
 //   Stefan Lange
 //
-// Copyright (c) 2005-2019 empira Software GmbH, Cologne Area (Germany)
+// Copyright (c) 2005-2017 empira Software GmbH, Cologne Area (Germany)
 //
 // http://www.pdfsharp.com
 // http://sourceforge.net/projects/pdfsharp
@@ -427,12 +427,11 @@ namespace PdfSharp.Pdf.IO
                 byte[] bytes = value.Stream.Value;
                 if (bytes.Length != 0)
                 {
-                    // Dictionary stream has already been encrypted
-                    // if (_securityHandler != null)
-                    // {
-                    //     bytes = (byte[])bytes.Clone();
-                    //     bytes = _securityHandler.EncryptBytes(bytes);
-                    // }
+                    if (_securityHandler != null)
+                    {
+                        bytes = (byte[])bytes.Clone();
+                        bytes = _securityHandler.EncryptBytes(bytes);
+                    }
                     Write(bytes);
                     if (_lastCat != CharCat.NewLine)
                         WriteRaw('\n');

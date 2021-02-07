@@ -1,6 +1,4 @@
-﻿#if !NETSTANDARD2_0
-
-using System;
+﻿using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,5 +26,3 @@ namespace PdfSharp.Windows
     }
   }
 }
-
-#endif
