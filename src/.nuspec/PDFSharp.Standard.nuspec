@@ -13,6 +13,8 @@
     <description>PDFSharp</description>
     <summary></summary>
     <tags>PdfSharp Pdf Document Generation</tags>
+
+    <repository type="git" url="https://github.com/sneeknet/PDFSharp-netstandard2.0" />
     
     <dependencies>
       <group targetFramework=".NETStandard2.0">
